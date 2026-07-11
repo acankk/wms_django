@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Bin
+from .serializers import BinSerializer
 
-# Create your views here.
+
+class BinViewSet(viewsets.ModelViewSet):
+    queryset = Bin.objects.all()
+    serializer_class = BinSerializer
