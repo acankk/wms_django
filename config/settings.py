@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.master',
     'apps.outbound',
     'apps.reports',
+    "apps.stock",
 ]
 
 MIDDLEWARE = [
