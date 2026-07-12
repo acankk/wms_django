@@ -59,7 +59,7 @@ class StockBatch(models.Model):
                 self.batch_number = "BT000001"
 
         if not self.pk:
-            self.remaining_quantity = self.quantity
+            self.remaining_quantity = self.initial_quantity
 
         super().save(*args, **kwargs)
 

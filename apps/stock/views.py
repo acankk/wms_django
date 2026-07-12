@@ -4,9 +4,12 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from datetime import timedelta
+
+from django.utils import timezone
 
 from .models import StockBatch
-from .serializers import StockBatchSerializer
+from .serializers import StockBatchSerializer, ExpiredAlertSerializer
 
 
 class StockBatchListCreateView(APIView):
@@ -96,3 +99,24 @@ class StockBatchDetailView(APIView):
             },
             status=status.HTTP_200_OK
         )
+    
+
+class ExpiredAlertView(APIView):
+
+    def get(self, request):
+
+        today = timezone.now().date()
+
+        alert_date = today + timedelta(days=30)
+
+        batches = StockBatch.objects.filter(
+            remaining_quantity__gt=0,
+            expired_date__lte=alert_date
+        ).order_by("expired_date")
+
+        serializer = ExpiredAlertSerializer(
+            batches,
+            many=True
+        )
+
+        return Response(serializer.data)

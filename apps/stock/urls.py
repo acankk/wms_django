@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     StockBatchListCreateView,
     StockBatchDetailView,
+    ExpiredAlertView
 )
 
 urlpatterns = [
@@ -16,5 +17,10 @@ urlpatterns = [
         "stock-batches/<int:pk>/",
         StockBatchDetailView.as_view(),
         name="stock-batch-detail",
+    ),
+
+    path(
+        "expired-alert/",
+        ExpiredAlertView.as_view()
     ),
 ]
