@@ -1,10 +1,8 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
-from .views import BinViewSet
+from django.urls import path
 
-router = DefaultRouter()
-router.register(r"bins", BinViewSet, basename="bins")
+from .views import BinListCreateView, BinDetailView
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("bins/", BinListCreateView.as_view(), name="bin-list"),
+    path("bins/<int:pk>/", BinDetailView.as_view(), name="bin-detail"),
 ]
