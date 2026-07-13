@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 
-print("DATABASE_URL =", repr(os.getenv("DATABASE_URL")))
+
 
 DATABASES = {
     "default": dj_database_url.config(
