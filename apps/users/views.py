@@ -4,13 +4,20 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from drf_spectacular.utils import extend_schema
 from .serializers import LoginSerializer, ProfileSerializer
+
+
 
 
 class LoginView(APIView):
     authentication_classes = []
     permission_classes = []
+
+    @extend_schema(
+
+        request=LoginSerializer
+    )
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -58,6 +65,12 @@ class LoginView(APIView):
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        summary="Get Current User",
+        description="Retrieve authenticated user profile.",
+        responses=ProfileSerializer,
+    )
 
     def get(self, request):
         serializer = ProfileSerializer(request.user)

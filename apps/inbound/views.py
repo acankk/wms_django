@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from drf_spectacular.utils import extend_schema
 from .models.inbound import Inbound
 from .serializers import InboundSerializer
 
@@ -12,6 +12,9 @@ from .serializers import InboundSerializer
 class InboundListCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+            responses=InboundSerializer(many=True)
+    )
     def get(self, request):
         inbounds = Inbound.objects.select_related(
             "supplier"
@@ -26,6 +29,7 @@ class InboundListCreateView(APIView):
         )
 
         return Response(serializer.data)
+    
 
     def post(self, request):
         serializer = InboundSerializer(
