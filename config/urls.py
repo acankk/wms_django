@@ -14,6 +14,11 @@ urlpatterns = [
     
     path("api/", include("apps.inventory.urls")),
     path("api/", include("apps.inbound.urls")),
+    path("api/outbounds/", include("apps.outbound.urls")),
+    path(
+        "api/reports/",
+        include("apps.reports.urls"),
+    ),
 
     path(
         "api/schema/",
